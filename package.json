@@ -1,0 +1,14 @@
+{
+  "name": "discipline-os",
+  "version": "1.0.0",
+  "description": "Discipline Operating System - A PWA for tracking daily habits",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for static site'",
+    "start": "npx serve .",
+    "preview": "npx serve ."
+  },
+  "keywords": ["pwa", "habits", "discipline"],
+  "author": "",
+  "license": "MIT"
+}
