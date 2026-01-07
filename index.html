@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div class="bg"></div>
+<div class="grain"></div>
+
+<div class="app" id="app" aria-label="Discipline OS V7">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">DOS</div>
+      <div>
+        <div class="title">DISCIPLINE_OS</div>
+        <div class="subtitle" id="subtitle">Offline. Deterministic. No excuses.</div>
+      </div>
+    </div>
+
+    <div class="headerActions">
+      <button class="chip" id="btnTheme" title="Toggle theme">🌓</button>
+      <button class="chip" id="btnPrivacy" title="Privacy mode">🙈</button>
+      <button class="chip" id="btnExportTop" title="Export data">⬇️</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Navigation tabs">
+    <button class="tab active" data-tab="today" role="tab">Today</button>
+    <button class="tab" data-tab="week" role="tab">Week</button>
+    <button class="tab" data-tab="month" role="tab">Month</button>
+    <button class="tab" data-tab="workouts" role="tab">Workouts</button>
+    <button class="tab" data-tab="settings" role="tab">Settings</button>
+  </nav>
+
+  <!-- TODAY -->
+  <section class="panel show" id="tab-today" role="tabpanel">
+    <div class="grid2">
+      <div class="card">
+        <div class="label">Selected day</div>
+        <div class="big" id="todayLabel">—</div>
+        <div class="pill" id="dayState">—</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Score</div>
+        <div class="big"><span id="scoreNow">0</span><span class="muted">/</span><span id="scoreMax">0</span></div>
+        <div class="rowLine">
+          <div class="mini">Overall streak: <b id="overallStreak">0</b></div>
+          <div class="mini">Best: <b id="bestStreak">0</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="rowLine">
+        <div>
+          <div class="label">Habits</div>
+          <div class="mini" id="lockHint">—</div>
+        </div>
+
+        <div class="actions">
+          <button class="chip" id="btnPrevDay" title="Previous day">←</button>
+          <button class="chip" id="btnNextDay" title="Next day">→</button>
+          <button class="chip" id="btnCopyYesterday" title="Copy yesterday">Copy</button>
+        </div>
+      </div>
+
+      <div class="habits" id="habits"></div>
+
+      <div class="ctaRow">
+        <button class="primary" id="btnSubmitDay">SUBMIT DAY</button>
+        <button class="ghost" id="btnUnlockDay">Unlock</button>
+        <button class="ghost" id="btnResetDay">Reset day</button>
+      </div>
+
+      <div class="noteRow">
+        <input id="dayNote" placeholder="Quick note (optional) — triggers, wins, excuses…" />
+        <button class="chip" id="btnSaveNote">Save</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="rowLine">
+        <div>
+          <div class="label">Today’s workout (no equipment)</div>
+          <div class="mini">Generate a plan → check off items → optionally auto-complete “Workout” habit.</div>
+        </div>
+        <div class="actions">
+          <button class="chip" id="btnGenWorkout">🎲 Generate</button>
+          <button class="chip" id="btnClearWorkout">🧹 Clear</button>
+        </div>
+      </div>
+
+      <div class="workoutMeta" id="workoutMeta">—</div>
+      <div class="workoutList" id="workoutList"></div>
+
+      <div class="noteRow">
+        <input id="manualWorkout" placeholder="Add workout item (e.g., Push-ups • 3×12)" />
+        <button class="chip" id="btnAddWorkout">Add</button>
+      </div>
+
+      <div class="mini" id="autoWorkoutHint">—</div>
+    </div>
+  </section>
+
+  <!-- WEEK -->
+  <section class="panel" id="tab-week" role="tabpanel">
+    <div class="card">
+      <div class="rowLine">
+        <div>
+          <div class="label">Week view</div>
+          <div class="mini">Tap a day to view/edit. Submitted days are locked.</div>
+        </div>
+        <div class="actions">
+          <button class="chip" id="btnThisWeek">This week</button>
+        </div>
+      </div>
+      <div class="week" id="week"></div>
+    </div>
+
+    <div class="card" id="weekRecapCard">
+      <div class="label">Weekly recap</div>
+      <div class="recapGrid" id="weekRecap"></div>
+      <div class="divider"></div>
+      <div class="label">Per-habit totals</div>
+      <div class="totals" id="weekTotals"></div>
+    </div>
+  </section>
+
+  <!-- MONTH -->
+  <section class="panel" id="tab-month" role="tabpanel">
+    <div class="card">
+      <div class="rowLine">
+        <div>
+          <div class="label">Month heatmap</div>
+          <div class="mini">Green = higher completion ratio. Tap a day to jump.</div>
+        </div>
+        <div class="actions">
+          <button class="chip" id="btnPrevMonth">←</button>
+          <div class="monthTitle" id="monthTitle">—</div>
+          <button class="chip" id="btnNextMonth">→</button>
+        </div>
+      </div>
+
+      <div class="dow">
+        <div>M</div>
+        <div>T</div>
+        <div>W</div>
+        <div>T</div>
+        <div>F</div>
+        <div>S</div>
+        <div>S</div>
+      </div>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="legend">
+        <span class="lg">0</span>
+        <span class="lg lv1"></span>
+        <span class="lg lv2"></span>
+        <span class="lg lv3"></span>
+        <span class="lg lv4"></span>
+        <span class="lg">Max</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKOUTS -->
+  <section class="panel" id="tab-workouts" role="tabpanel">
+    <div class="card">
+      <div class="label">Workout generator settings</div>
+      <div class="formGrid">
+        <label>
+          <span>Goal</span>
+          <select id="profileGoal">
+            <option value="fat_loss">Fat Loss</option>
+            <option value="muscle">Muscle</option>
+            <option value="endurance">Endurance</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Current weight (lbs)</span>
+          <input type="number" id="profileCurrentWeight" min="50" max="600" />
+        </label>
+
+        <label>
+          <span>Goal weight (lbs)</span>
+          <input type="number" id="profileGoalWeight" min="50" max="600" />
+        </label>
+
+        <label>
+          <span>Workout duration</span>
+          <select id="profileDuration">
+            <option value="10">10 min</option>
+            <option value="15">15 min</option>
+            <option value="20">20 min</option>
+            <option value="25" selected>25 min</option>
+            <option value="30">30 min</option>
+          </select>
+        </label>
+
+        <label class="checkboxRow">
+          <input type="checkbox" id="autoWorkoutHabit" />
+          <span>Auto-check “Workout” habit when all workout items are done</span>
+        </label>
+      </div>
+
+      <div class="ctaRow">
+        <button class="primary" id="btnSaveProfile">SAVE PROFILE</button>
+        <button class="ghost" id="btnGenWorkoutFromTab">Generate for selected day</button>
+      </div>
+
+      <div class="divider"></div>
+      <div class="label">Reminder plan (iPhone-friendly)</div>
+      <div class="mini">
+        iPhone PWAs are limited for notifications. The pro move: use <b>Apple Shortcuts automation</b>.
+        Tap “Copy plan” and paste into Notes.
+      </div>
+      <div class="ctaRow">
+        <button class="chip" id="btnCopyReminderPlan">Copy plan</button>
+      </div>
+      <pre class="code" id="reminderPlan"></pre>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="panel" id="tab-settings" role="tabpanel">
+    <div class="card">
+      <div class="label">Habits manager</div>
+      <div class="mini">Add, reorder, rename, disable. Keep it tight (6–10 habits).</div>
+
+      <div class="noteRow">
+        <input id="newHabitName" placeholder="New habit name (e.g., Read 20m)" />
+        <button class="chip" id="btnAddHabit">Add</button>
+      </div>
+
+      <div class="habitManager" id="habitManager"></div>
+
+      <div class="divider"></div>
+      <div class="label">Scoring</div>
+      <div class="formGrid">
+        <label>
+          <span>Locked-in threshold (score ≥)</span>
+          <input type="number" id="threshold" min="1" />
+        </label>
+
+        <label>
+          <span>Status labels (optional)</span>
+          <input type="text" id="statusLabels" placeholder="Locked In | Slipping | Broken" />
+        </label>
+      </div>
+
+      <div class="ctaRow">
+        <button class="primary" id="btnSaveSettings">SAVE SETTINGS</button>
+        <button class="ghost" id="btnApplyTemplate">Apply template</button>
+      </div>
+    </div>
+
+    <div class="card danger">
+      <div class="label">Data</div>
+      <div class="ctaRow">
+        <button class="chip" id="btnExport">Export JSON</button>
+        <label class="chip fileBtn">
+          Import JSON
+          <input type="file" id="btnImport" accept="application/json" />
+        </label>
+        <button class="ghost" id="btnResetAll">RESET ALL</button>
+      </div>
+      <div class="mini">Export often. This is local-only storage.</div>
+    </div>
+  </section>
+
+  <!-- Toast + Modal -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalTitle" id="modalTitle">Confirm</div>
+      <div class="modalText" id="modalText">—</div>
+      <div class="ctaRow">
+        <button class="primary" id="modalYes">Yes</button>
+        <button class="ghost" id="modalNo">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
